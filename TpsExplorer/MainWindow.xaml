@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TpsExplorer"
+        xmlns:viewModel="clr-namespace:TpsExplorer.MVVM.ViewModel"
         mc:Ignorable="d"
         Height="600" Width="920"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+
     <Border Background="#272537"
             CornerRadius="20">
         <Grid>
@@ -33,18 +38,42 @@
                              Height="50"
                              Foreground="White"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             IsChecked="True"
+                             Command="{Binding BoxViewCommand}"/>
                 <RadioButton Content="HPM2"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding HgBoxViewCommand}"/>
                 <RadioButton Content="HPM3"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
+
+            <TextBox Width="250"
+                     Height="40"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="5"
+                     Grid.Column="1"
+                     Style="{StaticResource Moderntextbox}"/>
+            <ComboBox Width="250"
+                      Height="40"
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Left" 
+                      Margin="5"
+                      Grid.Row="0" 
+                      Grid.Column="2" 
+                      Style="{StaticResource ComboBox}"/>
+            <ContentControl Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="10"
+                            Content="{Binding CurrentView}"></ContentControl>
+
         </Grid>
     </Border>
 </Window>
