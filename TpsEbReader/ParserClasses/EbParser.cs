@@ -9,7 +9,7 @@ public class EbParser
     private string _ebFolderPath;
     private Dictionary<string, Point> _points = new();  // pointName, pointData
     private Dictionary<string, Box> _boxes = new(); // boxName, boxData
-    private Logger _logger = new();
+    private Logger _logger = new(ErrorLevel.FullDebug);
 
     public EbParser(string ebFolderPath)
     {
@@ -98,9 +98,9 @@ public class EbParser
             entity.EbSource = psr.FileName;
             return ParseState.EntityType;
         }
-        _logger.LogMessage(ErrorLevel.Severe, $"Parser expected system entity and instead got: {line}\n" +
-                                                     $"Skipping to next system Entity" + 
-                                                     $"Line:{psr.Line} in {psr.FileName}\n");
+        _logger.LogMessage(ErrorLevel.Warning, $"Parser expected system entity and instead got: {line}\n" +
+                                               $"Skipping to next system Entity\n" + 
+                                               $"Line: {psr.Line} in {psr.FileName}\n");
         return ParseState.SkipSystemEntity;
     }
     private ParseState ParseEntityType(PeekableStreamReaderAdapter psr, SystemEntity entity)
@@ -113,9 +113,9 @@ public class EbParser
             return ParseState.EntityName;
         }
 
-        _logger.LogMessage(ErrorLevel.Severe, $"Parser expected entity type and instead got: {line}\n" +
-                                                     $"Skipping to next system Entity" +
-                                                     $"Line:{psr.Line} in {psr.FileName}\n");
+        _logger.LogMessage(ErrorLevel.Warning, $"Parser expected entity type and instead got: {line}\n" +
+                                               $"Skipping to next system Entity\n" +
+                                               $"Line: {psr.Line} in {psr.FileName}\n");
         return ParseState.SkipSystemEntity;
     }
     private ParseState ParseEntityName(PeekableStreamReaderAdapter psr, SystemEntity entity)
@@ -127,24 +127,24 @@ public class EbParser
             if (entity is Point && _points.ContainsKey(tagName))
             {
                 _logger.LogMessage(ErrorLevel.Warning, $"Parser found duplicate point: {tagName}\n" +
-                                                              $"Skipping to next system Entity" +
-                                                              $"Line:{psr.Line} in {psr.FileName}\n");
+                                                       $"Skipping to next system Entity\n" +
+                                                       $"Line: {psr.Line} in {psr.FileName}\n");
                 return ParseState.SkipSystemEntity;
             }
             if (entity is Box && _boxes.ContainsKey(tagName))
             {
                 _logger.LogMessage(ErrorLevel.Warning, $"Parser found duplicate box: {tagName}\n" +
-                                                              $"Skipping to next system Entity" +
-                                                              $"Line:{psr.Line} in {psr.FileName}\n");
+                                                       $"Skipping to next system Entity\n" +
+                                                       $"Line: {psr.Line} in {psr.FileName}\n");
                 return ParseState.SkipSystemEntity;
             }
             entity.Name = tagName;
             return ParseState.EntityParameters;
         }
 
-        _logger.LogMessage(ErrorLevel.Severe, $"Parser expected entity name and instead got: {line}" +
-                                                     $"Skipping to next system Entity" +
-                                                     $"Line:{psr.Line} in {psr.FileName}\n");
+        _logger.LogMessage(ErrorLevel.Warning, $"Parser expected entity name and instead got: {line}\n" +
+                                               $"Skipping to next system Entity\n" +
+                                               $"Line:{psr.Line} in {psr.FileName}\n");
 
         return ParseState.SkipSystemEntity;
     }
@@ -152,7 +152,7 @@ public class EbParser
     {
         if (psr.PeekLine().Contains("SYSTEM ENTITY"))
         {
-            //_logger.LogMessage(ErrorLevel.DebugInfo, $"Parser completed parsing entity {entity.PointName}");
+            _logger.LogMessage(ErrorLevel.FullDebug, $"Parser completed parsing entity {entity.Name}");
             return ParseState.EndOfEntity;
         }
 
@@ -169,9 +169,9 @@ public class EbParser
         }
         else
         {
-            _logger.LogMessage(ErrorLevel.Severe, $"Parser expected point parameter info and instead got: {line}" +
-                                                         $"Skipping to next system Entity" +
-                                                         $"Line:{psr.Line} in {psr.FileName}\n"); ;
+            _logger.LogMessage(ErrorLevel.Warning, $"Parser expected point parameter info and instead got: {line}\n" +
+                                                   $"Skipping to next system Entity\n" +
+                                                   $"Line: {psr.Line} in {psr.FileName}\n");
             return ParseState.SkipSystemEntity;
         }
 
@@ -189,6 +189,8 @@ public class EbParser
     {
         if (psr.PeekLine().Contains("SYSTEM ENTITY"))
         {
+            _logger.LogMessage(ErrorLevel.FullDebug, $"Parser successfully skipped to next System Entity\n" +
+                                                     $"Line: {psr.Line} in {psr.FileName}\n");
             return ParseState.StartOfEntity;
         }
         var line = psr.ReadLine();
