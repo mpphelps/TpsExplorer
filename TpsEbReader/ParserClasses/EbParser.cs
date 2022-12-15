@@ -1,5 +1,6 @@
 ﻿using System.Formats.Asn1;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices.ComTypes;
 using TpsEbReader.DataStructures;
 
 namespace TpsEbReader;
@@ -11,13 +12,9 @@ public class EbParser
     private Dictionary<string, Box> _boxes = new(); // boxName, boxData
     private Logger _logger = new(ErrorLevel.FullDebug);
 
-    public EbParser(string ebFolderPath)
+    public void ParseEb(string folderPath)
     {
-        _ebFolderPath = ebFolderPath;
-    }
-
-    public void ParseEb()
-    {
+        _ebFolderPath = folderPath;
         var directoryInfo = new DirectoryInfo(_ebFolderPath);
         if (!directoryInfo.Exists)
         {
@@ -35,7 +32,25 @@ public class EbParser
         ResolvePointReferences();
 
     }
+    public List<Box> GetBoxes()
+    {
+        var boxes = new List<Box>();
+        foreach (var box in _boxes)
+        {
+            boxes.Add(box.Value);
+        }
+        return boxes;
+    }
 
+    public List<Point> GetPoints()
+    {
+        var points = new List<Point>();
+        foreach (var point in _points)
+        {
+            points.Add(point.Value);
+        }
+        return points;
+    }
     private void ResolvePointReferences()
     {
         var connectionType = PointReferenceType.P2PConnection;
@@ -64,7 +79,6 @@ public class EbParser
             }
         }
     }
-
     private void ParseEbFile(PeekableStreamReaderAdapter psr)
     {
         var state = ParseState.StartOfEntity;

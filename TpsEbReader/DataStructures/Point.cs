@@ -3,7 +3,7 @@ using TpsEbReader.DataStructures;
 
 namespace TpsEbReader;
 
-internal class Point : SystemEntity
+public class Point : SystemEntity
 {
     public Point()
     {

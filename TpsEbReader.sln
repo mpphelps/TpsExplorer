@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TpsEbReader", "TpsEbReader\TpsEbReader.csproj", "{21778A41-FE21-455B-BEB5-F0AFB094EC85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpsExplorer", "TpsExplorer\TpsExplorer.csproj", "{A1FA5043-A8DB-4B82-AA9B-1E8BBDAB5CC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TpsExplorer", "TpsExplorer\TpsExplorer.csproj", "{A1FA5043-A8DB-4B82-AA9B-1E8BBDAB5CC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWpf", "TestWpf\TestWpf.csproj", "{05063C26-FB25-4E3E-B9F5-1A135770EF97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A1FA5043-A8DB-4B82-AA9B-1E8BBDAB5CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1FA5043-A8DB-4B82-AA9B-1E8BBDAB5CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1FA5043-A8DB-4B82-AA9B-1E8BBDAB5CC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05063C26-FB25-4E3E-B9F5-1A135770EF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05063C26-FB25-4E3E-B9F5-1A135770EF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05063C26-FB25-4E3E-B9F5-1A135770EF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05063C26-FB25-4E3E-B9F5-1A135770EF97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
